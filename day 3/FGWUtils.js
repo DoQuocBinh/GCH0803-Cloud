@@ -1,5 +1,5 @@
 const getCurrentDate = ()=>{
-    const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
+    const options = {  year: 'numeric', month: 'long', day: 'numeric' };
     return new Date().toLocaleDateString("vi-VN",options);
    
 }

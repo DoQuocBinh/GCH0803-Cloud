@@ -3,16 +3,14 @@ const app = express()
 const {getCurrentDate,printLog} = require('./FGWUtils')
 
 app.use(express.urlencoded({extended:true}))
+app.set('view engine','hbs')
 
 
 app.post('/survey',(req,res)=>{
     var nameInput = req.body.txtName;
-    res.setHeader('Content-Type','text/html');
-    //res.end('<h1>Thank you ' + nameInput + '</h1>')
-    res.write(`<h1>Thank you ${nameInput} for participating the survey! <h1>`)
-    var now = getCurrentDate();
-    printLog(now)
-    res.end(`Current date: ${now}`)
+    var jobInput = req.body.job;
+    res.render('survey',{name:nameInput,job:jobInput,now:getCurrentDate()})
+   
 })
 
 app.get('/',(req,res)=>{
