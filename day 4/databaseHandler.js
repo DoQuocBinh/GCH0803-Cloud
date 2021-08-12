@@ -35,4 +35,10 @@ async function getStudentById(idInput){
     return dbo.collection("students").findOne({_id:ObjectId(idInput)});
 }
 
-module.exports = {getDB,insertStudent,deleteStudent,searchStudent,getAllStudent,getStudentById}
+async function updateStudent(id,nameInput,tuoiInput){
+    const dbo = await getDB();
+    dbo.collection("students").updateOne({_id:ObjectId(id)},{$set:{name:nameInput,tuoi:tuoiInput}})
+
+}
+
+module.exports = {getDB,insertStudent,deleteStudent,searchStudent,getAllStudent,getStudentById,updateStudent}

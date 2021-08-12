@@ -9,6 +9,7 @@
 <body>
     <h5>Edit student</h5>
      <form action="/update" method="post">
+        <input type="hidden" name="id" value="{{student._id}}">
         Name <input type="text" name="txtName" value="{{student.name}}">
         <br>
         Tuoi <input type="text" name="txtTuoi" value="{{student.tuoi}}">
