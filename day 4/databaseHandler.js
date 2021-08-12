@@ -30,4 +30,9 @@ async function getAllStudent() {
     return allStudents;
 }
 
-module.exports = {getDB,insertStudent,deleteStudent,searchStudent,getAllStudent}
+async function getStudentById(idInput){
+    const dbo = await getDB();
+    return dbo.collection("students").findOne({_id:ObjectId(idInput)});
+}
+
+module.exports = {getDB,insertStudent,deleteStudent,searchStudent,getAllStudent,getStudentById}

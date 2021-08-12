@@ -1,12 +1,19 @@
 const EXPRESS = require('express')
 const { Int32} = require('mongodb');
 
-const { insertStudent,deleteStudent,searchStudent,getAllStudent} = require('./databaseHandler');
+const { insertStudent,deleteStudent,searchStudent,getAllStudent,getStudentById} = require('./databaseHandler');
 
 const APP = EXPRESS()
 
 APP.use(EXPRESS.urlencoded({extended:true}))
 APP.set('view engine','hbs')
+
+APP.get('/edit',async (req,res)=>{
+    const idInput = req.query.id;
+    const search_Student = await getStudentById(idInput);
+    res.render('edit',{student:search_Student})
+
+})
 
 APP.post('/insert',async (req,res)=>{
     const nameInput = req.body.txtName;
