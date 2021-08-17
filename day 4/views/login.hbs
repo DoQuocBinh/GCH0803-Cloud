@@ -7,12 +7,27 @@
     <title>Login</title>
 </head>
 <body>
+    <h1>Login</h1>
     <form action="/doLogin" method="post">
         <input type="text" name="txtName"/>
         <br>
         <input type="password" name="txtPassword">
         <br>
         <input type="submit" value="Login">
+    </form>
+    <hr>
+    <h1 style="color: orange;">Register</h1>
+    <form action="/register" method="post">
+        <input type="text" name="txtName"/>
+        <br>
+        <input type="password" name="txtPassword">
+        <br>
+        <select name="role">
+            <option value="admin">Admin</option>
+            <option value="customer">Customer</option>
+        </select>
+        <br>
+        <input type="submit" value="Register">
     </form>
 </body>
 </html>
