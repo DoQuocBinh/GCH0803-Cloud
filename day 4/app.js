@@ -1,9 +1,13 @@
 const EXPRESS = require('express')
 const { Int32} = require('mongodb');
+const session = require('express-session')
 
 const { insertStudent,deleteStudent,searchStudent,getAllStudent,getStudentById,updateStudent} = require('./databaseHandler');
 
 const APP = EXPRESS()
+
+// Use the session middleware
+APP.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 60000 }}))
 
 APP.use(EXPRESS.urlencoded({extended:true}))
 APP.set('view engine','hbs')
@@ -21,11 +25,26 @@ APP.get('/edit',async (req,res)=>{
     const search_Student = await getStudentById(idInput);
     res.render('edit',{student:search_Student})
 })
+APP.get('/login',(req,res)=>{
+    res.render('login')
+})
+APP.post('/doLogin',(req,res)=>{
+    const nameInput = req.body.txtName;
+    const passInput = req.body.txtPassword;
+    if(nameInput=="tom" && passInput =="123"){
+        req.session["User"]={
+            name : nameInput,
+            role : 'admin'
+        }
+    }
+    res.redirect('/');
+})
 
 APP.post('/insert',async (req,res)=>{
     const nameInput = req.body.txtName;
     const tuoiInput = req.body.txtTuoi;
-    const newStudent = {name:nameInput,tuoi: Int32(tuoiInput)};
+    const pictureInput = req.body.picture;
+    const newStudent = {name:nameInput,tuoi: Int32(tuoiInput),picture:pictureInput};
     await insertStudent(newStudent);
     //chuyen huong den file Index
     res.redirect('/');
@@ -42,8 +61,10 @@ APP.post('/search',async (req,res)=>{
 })
 
 APP.get('/',async (req,res)=>{
+    if(!req.session["User"])
+        res.redirect('/login')
     const allStudents = await getAllStudent();
-    res.render('index',{data:allStudents})
+    res.render('index',{data:allStudents,user:req.session["User"]})
 })
 
 const PORT = process.env.PORT || 5000;

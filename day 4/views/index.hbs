@@ -7,22 +7,28 @@
     <title>Index</title>
 </head>
 <body>
-    <h1>Hello world</h1>
+    <h1>Hello {{user.name}} and {{user.role}}</h1>
     <form action="/search" method="post">
         Name: <input type="text" name="txtSearch"/>
         <input type="submit" value="Search">
     </form>
-
+<hr>
     <form action="/insert" method="post">
         Name <input type="text" name="txtName">
         <br>
         Tuoi <input type="text" name="txtTuoi">
         <br>
+        <br>
+        Picture
+        <input type="text" name="picture">
+        <br>
         <input type="submit" value="Insert">
     </form>
+    <hr>
     <ul>
         {{#each data}}
         <li>{{name}} -- {{tuoi}} 
+            <img src="{{picture}}" width="150" height="100"/>
             <a href="/delete?id={{_id}}">Delete</a>
             <a href="/edit?id={{_id}}">Edit</a>
         </li>
